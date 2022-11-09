@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${title}"></title>
+  <link th:href="@{/poc-thymeleaf-pattern-library-components.css}" rel="stylesheet">
+  <script type="module" th:src="@{/poc-thymeleaf-pattern-library-components.js}"></script>
+  <script type="module">
+    import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js";
+    import { AlertController, greet } from "[[@{/poc-thymeleaf-pattern-library-components.js}]]";
+
+    window.greet = greet;
+
+    const stimulusApplication = Application.start();
+    stimulusApplication.register("alert", AlertController);
+  </script>
+</head>
+<body>
+<th:block th:replace="${'/components' + templatePath} :: template"></th:block>
+</body>
+</html>

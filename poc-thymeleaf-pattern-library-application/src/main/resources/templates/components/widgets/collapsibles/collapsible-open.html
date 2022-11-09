@@ -1,0 +1,6 @@
+<th:block th:fragment="template">
+  <th:block th:replace="components/collapsible/collapsible :: collapsible (~{::#title-1},~{::#content-1}, true)">
+    <p id="title-1">Collapsible</p>
+    <div id="content-1">This is the content of the collapsible</div>
+  </th:block>
+</th:block>

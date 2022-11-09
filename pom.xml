@@ -11,6 +11,11 @@
 	<name>poc-thymeleaf-pattern-library</name>
 	<description>PoC for Thymeleaf-based Pattern Library</description>
 
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+	</properties>
+
 	<modules>
 		<module>poc-thymeleaf-pattern-library-application</module>
 		<module>poc-thymeleaf-pattern-library-components</module>

@@ -1,0 +1,10 @@
+<th:block
+    xmlns:th="http://www.thymeleaf.org"
+    th:fragment="alert (message)">
+
+  <div class="pl-alert" data-controller="alert" data-alert-target="alert">
+    <p class="pl-alert-message" th:text="${message}"></p>
+    <button class="pl-alert-close-button" data-action="click->alert#close">X</button>
+  </div>
+
+</th:block>

@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="navigation (applicationName, rootComponentGroup)">
+  <!--/*@thymesVar id="applicationName" type="java.lang.String"*/-->
+  <!--/*@thymesVar id="rootComponentGroup" type="personal.cstettler.thymeleaf.patternlibrary.ComponentGroup"*/-->
+
+  <ul>
+    <li>
+      <a th:href="${#mvc.url('PLC#index').build()}" th:text="${applicationName}"></a></li>
+    <th:block th:replace="pattern-library/navigation :: navigation-level (${rootComponentGroup.subGroups})"/>
+  </ul>
+</th:block>
+
+<th:block th:fragment="navigation-level (componentGroups)">
+  <!--/*@thymesVar id="componentGroup" type="personal.cstettler.thymeleaf.patternlibrary.ComponentGroup"*/-->
+
+  <li th:each="componentGroup : ${componentGroups}">
+    <th:block th:if="${componentGroup.hasDocumentation()}">
+      <a th:href="${#mvc.url('PLC#index').arg(0, componentGroup.id).build()}"
+         th:text="${componentGroup.name}"></a>
+    </th:block>
+
+    <th:block th:unless="${componentGroup.hasDocumentation()}">
+      <th:block th:text="${componentGroup.name}"></th:block>
+    </th:block>
+
+    <th:block th:if="${componentGroup.hasSubGroups()}">
+      <ul>
+        <th:block th:replace="pattern-library/navigation :: navigation-level (${componentGroup.subGroups})"/>
+      </ul>
+    </th:block>
+  </li>
+</th:block>
+</body>
+</html>

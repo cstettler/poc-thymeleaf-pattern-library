@@ -1,0 +1,14 @@
+<th:block
+    xmlns:th="http://www.thymeleaf.org"
+    th:fragment="collapsible (titleElement, contentElement, initiallyOpen)">
+
+
+  <pl-collapsible th:open="${initiallyOpen}">
+    <div class="pl-collapsible-title">
+      <th:block th:replace="${titleElement}" />
+    </div>
+    <div class="pl-collapsible-content">
+      <th:block th:replace="${contentElement}" />
+    </div>
+  </pl-collapsible>
+</th:block>
