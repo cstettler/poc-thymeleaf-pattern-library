@@ -58,15 +58,14 @@ nav {
 nav ul {
     list-style: none;
     padding-left: 1.5rem;
-    padding-top: 1rem;
 }
 
-nav ul li {
+nav ul > li {
     padding-top: 0.5rem;
 }
 
-nav li ul {
-    padding-top: 0;
+nav > ul > li {
+    padding-top: 2rem;
 }
 
 nav a, nav a:visited {
