@@ -4,15 +4,27 @@
   <meta charset="utf-8">
   <title>Pattern Library</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <link th:href="@{/pattern-library.css}" rel="stylesheet">
   <script type="module" th:src="@{/pattern-library.js}"></script>
 </head>
 <body>
-<nav>
-  <th:block th:replace="pattern-library/navigation::navigation (${applicationName}, ${rootComponentGroup})"/>
-</nav>
-<main>
-  <th:block layout:fragment="content"/>
-</main>
+<!--/*@thymesVar id="applicationName" type="java.lang.String"*/-->
+
+<div class="container">
+  <header>
+    <a th:href="${#mvc.url('PLC#index').build()}" th:text="${applicationName}"></a>
+  </header>
+
+  <main>
+    <nav>
+      <th:block th:replace="pattern-library/navigation::navigation (${rootComponentGroup})"/>
+    </nav>
+
+    <section>
+      <th:block layout:fragment="content"/>
+    </section>
+  </main>
+</div>
 </body>
 </html>

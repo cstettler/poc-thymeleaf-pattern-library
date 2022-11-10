@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
+
   <link th:href="@{/poc-thymeleaf-pattern-library-components.css}" rel="stylesheet">
+  <style>
+      body {
+          padding: 0;
+          margin: 0;
+      }
+  </style>
+
   <script type="module" th:src="@{/poc-thymeleaf-pattern-library-components.js}"></script>
   <script type="module">
     import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js";

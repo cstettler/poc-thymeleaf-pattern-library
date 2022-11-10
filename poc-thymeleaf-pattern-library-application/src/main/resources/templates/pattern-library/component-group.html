@@ -15,7 +15,7 @@
   <th:block th:if="${componentGroup.hasDocumentation()}" th:utext="${componentGroup.documentationContent}"></th:block>
 
   <th:block th:if="${componentGroup.hasExample()}">
-    <iframe th:src="${#mvc.url('PLC#example').arg(0, componentGroup.name).arg(1, componentGroup.examplePath).build()}"></iframe>
+    <iframe th:src="${#mvc.url('PLC#example').arg(0, componentGroup.name).arg(1, componentGroup.examplePath).build()}" onload="resizeFrameHeightToContent(this)"></iframe>
     <pre th:text="${componentGroup.exampleContent}"></pre>
   </th:block>
 
@@ -23,7 +23,7 @@
     <h2 th:text="${showCase.name}"></h2>
     <th:block th:if="${showCase.hasDocumentation()}" th:utext="${showCase.documentation}"></th:block>
 
-    <iframe th:src="${#mvc.url('PLC#example').arg(0, showCase.name).arg(1, showCase.id).build()}"></iframe>
+    <iframe th:src="${#mvc.url('PLC#example').arg(0, showCase.name).arg(1, showCase.id).build()}" onload="resizeFrameHeightToContent(this)"></iframe>
 
     <pre th:text="${showCase.example}"></pre>
   </div>
