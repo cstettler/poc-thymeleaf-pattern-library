@@ -18,9 +18,7 @@ export class Collapsible extends HTMLElement {
   }
 
   get contents() {
-    let elementNodeListOf = this.querySelectorAll('*');
-    console.log(elementNodeListOf);
-    return elementNodeListOf;
+    return this.querySelectorAll('*');
   }
 }
 
