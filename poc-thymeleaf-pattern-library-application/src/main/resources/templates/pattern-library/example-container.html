@@ -14,13 +14,10 @@
 
   <script type="module" th:src="@{/pl/poc-thymeleaf-pattern-library-components.js}"></script>
   <script type="module">
-    import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js";
-    import { AlertController, greet } from "[[@{/pl/poc-thymeleaf-pattern-library-components.js}]]";
+    import { registerGlobals, registerStimulusControllers, StimulusApplication } from "[[@{/pl/poc-thymeleaf-pattern-library-components.js}]]";
 
-    window.greet = greet;
-
-    const stimulusApplication = Application.start();
-    stimulusApplication.register("alert", AlertController);
+    registerGlobals(window);
+    registerStimulusControllers(StimulusApplication.start());
   </script>
 </head>
 <body>
