@@ -50,6 +50,7 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 ## Improvements
 - support component dialect when using UI components (e.g. https://github.com/Serbroda/thymeleaf-component-dialect or https://github.com/blynx/thymeleaf-fertilizer-dialect-playground)
 - use fingerprinting and caching provided by Spring Boot
+- support component documentation as part of UI component module (<component>.md)
 - demonstrate unit testing of UI components
 - demonstrate integration testing of UI components via pattern library application (e.g. using Playwright)
 - use more specific root folder for UI components (to avoid collisions on class path)
