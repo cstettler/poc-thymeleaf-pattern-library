@@ -12,11 +12,11 @@
   <!--/*@thymesVar id="componentGroup" type="personal.cstettler.thymeleaf.patternlibrary.ComponentGroup"*/-->
 
   <li th:each="componentGroup : ${componentGroups}">
-    <th:block th:if="${componentGroup.hasDocumentation()}">
+    <th:block th:if="${componentGroup.hasDocumentation() || componentGroup.hasExample()}">
       <a th:href="${#mvc.url('PLC#index').arg(0, componentGroup.id).build()}" th:text="${componentGroup.name}"></a>
     </th:block>
 
-    <th:block th:unless="${componentGroup.hasDocumentation()}">
+    <th:block th:unless="${componentGroup.hasDocumentation() || componentGroup.hasExample()}">
       <a th:text="${componentGroup.name}"></a>
     </th:block>
 
