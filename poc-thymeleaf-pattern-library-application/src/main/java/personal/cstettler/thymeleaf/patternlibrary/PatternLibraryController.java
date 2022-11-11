@@ -25,17 +25,20 @@ public class PatternLibraryController {
   private static final String ROOT_GROUP_ID = "/";
 
   private final String applicationName;
-  private final List<ComponentGroup> componentGroups;
-  private final ComponentGroup rootComponentGroup;
+  private final String componentsResourcePath;
+
+  private final Resource componentResourcesRoot;
+  private final ResourcePatternResolver resourcePatternResolver;
 
   PatternLibraryController(
     @Value("${pattern-library.application-name}") String applicationName,
     @Value("${pattern-library.components-resource-path}") String componentsResourcePath
   ) throws Exception {
     this.applicationName = applicationName;
+    this.componentsResourcePath = componentsResourcePath;
 
-    ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver(getClass().getClassLoader());
-    Resource componentResourcesRoot = resourcePatternResolver.getResource(componentsResourcePath);
+    resourcePatternResolver = new PathMatchingResourcePatternResolver(getClass().getClassLoader());
+    componentResourcesRoot = resourcePatternResolver.getResource(componentsResourcePath);
 
     if (!componentResourcesRoot.exists()) {
       throw new IllegalStateException("components resource path '" + componentsResourcePath + "' does not exist");
@@ -47,16 +50,20 @@ public class PatternLibraryController {
       throw new IllegalStateException("no index.md found in folder " + uriFor(componentResourcesRoot));
     }
 
-    Resource[] componentResources = resourcePatternResolver.getResources(componentsResourcePath + "/**/*");
-    componentGroups = collectComponentGroups(componentResourcesRoot, componentResources);
-    rootComponentGroup = componentGroupFor(ROOT_GROUP_ID).orElseThrow(() -> new IllegalStateException("root component group not found"));
+    // eagerly make application fail if resources are not ok
+    List<ComponentGroup> componentGroups = componentGroups();
+    componentGroupFor(componentGroups, ROOT_GROUP_ID).orElseThrow(
+      () -> new IllegalStateException("root component group not found")
+    );
   }
 
   @GetMapping("/")
   public ModelAndView index(@RequestParam(name = "id", required = false) String groupId) {
-    return componentGroupFor(groupId != null ? groupId : ROOT_GROUP_ID)
-      .map(componentGroup -> new ModelAndView("pattern-library/component-group", model(componentGroup)))
-      .orElse(new ModelAndView("pattern-library/error"));
+    List<ComponentGroup> componentGroups = componentGroups();
+
+    return componentGroupFor(componentGroups, groupId != null ? groupId : ROOT_GROUP_ID)
+      .map(componentGroup -> new ModelAndView("pattern-library/component-group", model(componentGroups, componentGroup)))
+      .orElse(new ModelAndView("pattern-library/error", model(componentGroups, null)));
   }
 
   @GetMapping("/example")
@@ -64,16 +71,31 @@ public class PatternLibraryController {
     return new ModelAndView("pattern-library/example-container", model(title, templatePath));
   }
 
-  private Optional<ComponentGroup> componentGroupFor(String groupId) {
+  private List<ComponentGroup> componentGroups() {
+    try {
+      Resource[] componentResources = resourcePatternResolver.getResources(componentsResourcePath + "/**/*");
+      List<ComponentGroup> componentGroups = collectComponentGroups(componentResourcesRoot, componentResources);
+
+      return componentGroups;
+    } catch (IOException e) {
+      throw new IllegalStateException("failed to collect component groups from resources", e);
+    }
+  }
+
+  private static ComponentGroup rootComponentGroupIn(List<ComponentGroup> componentGroups) {
+    return componentGroupFor(componentGroups, ROOT_GROUP_ID).orElseThrow(() -> new IllegalStateException("root component group not found"));
+  }
+
+  private static Optional<ComponentGroup> componentGroupFor(List<ComponentGroup> componentGroups, String groupId) {
     return componentGroups.stream()
       .filter(componentGroup -> componentGroup.getId().equals(groupId))
       .findFirst();
   }
 
-  private Map<String, Object> model(ComponentGroup componentGroup) {
+  private Map<String, Object> model(List<ComponentGroup> componentGroups, ComponentGroup componentGroup) {
     Map<String, Object> model = new HashMap<>();
     model.put("applicationName", applicationName);
-    model.put("rootComponentGroup", rootComponentGroup);
+    model.put("rootComponentGroup", rootComponentGroupIn(componentGroups));
     model.put("componentGroup", componentGroup);
 
     return model;
@@ -137,9 +159,7 @@ public class PatternLibraryController {
       return Optional.empty();
     }
 
-    return componentGroups.stream()
-      .filter(currentComponentGroup -> currentComponentGroup.getId().equals(parentGroupIdFor(componentGroup)))
-      .findFirst();
+    return componentGroupFor(componentGroups, parentGroupIdFor(componentGroup));
   }
 
   private static String relativePathFor(Resource componentResourcesRoot, Resource componentResource) {

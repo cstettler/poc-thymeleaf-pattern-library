@@ -65,7 +65,7 @@ public class ComponentGroup {
   }
 
   public String getExamplePath() {
-    return id + "/" + localId();
+    return id + localId();
   }
 
   public String getExampleContent() {
