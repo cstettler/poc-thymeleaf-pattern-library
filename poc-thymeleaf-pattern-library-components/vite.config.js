@@ -4,6 +4,7 @@ import copy from 'rollup-plugin-copy'
 export default defineConfig({
   build: {
     outDir: 'target/classes/static',
+    emptyOutDir: false,
     lib: {
       entry: ['src/main/resources/templates/components/index.js', 'src/main/resources/templates/components/index.css'],
       formats: ['es'],
