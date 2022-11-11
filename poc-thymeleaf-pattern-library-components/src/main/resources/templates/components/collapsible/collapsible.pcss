@@ -1,0 +1,46 @@
+.pl-collapsible-title {
+    border: gray solid 1px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+
+    & > div {
+        flex: 1;
+    }
+
+    & > .pl-collapsible-arrow {
+        align-self: center;
+        margin-right: 0.5rem;
+    }
+
+    & > .pl-collapsible-arrow-collapsed:after {
+        content: "";
+        display: block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-bottom: 0.125rem solid;
+        border-right: 0.125rem solid;
+        margin-top: 0;
+        margin-bottom: 0.25rem;
+        transform: rotate(45deg);
+    }
+
+    & > .pl-collapsible-arrow-expanded:after {
+        content: "";
+        display: block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-bottom: 0.125rem solid;
+        border-right: 0.125rem solid;
+        margin-top: 0.25rem;
+        margin-bottom: 0;
+        transform: rotate(-135deg);
+    }
+}
+
+.pl-collapsible-content {
+    border-left: gray solid 1px;
+    border-right: gray solid 1px;
+    border-bottom: gray solid 1px;
+    padding: 0.5rem;
+}

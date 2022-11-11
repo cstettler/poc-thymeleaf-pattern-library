@@ -5,7 +5,10 @@
 
   <pl-collapsible th:open="${initiallyOpen}">
     <div class="pl-collapsible-title">
-      <th:block th:replace="${titleElement}" />
+      <div>
+        <th:block th:replace="${titleElement}" />
+      </div>
+      <span class="pl-collapsible-arrow"></span>
     </div>
     <div class="pl-collapsible-content">
       <th:block th:replace="${contentElement}" />
