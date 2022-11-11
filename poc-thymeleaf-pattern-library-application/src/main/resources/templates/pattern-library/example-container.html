@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
 
-  <link th:href="@{/poc-thymeleaf-pattern-library-components.css}" rel="stylesheet">
+  <link th:href="@{/pl/poc-thymeleaf-pattern-library-components.css}" rel="stylesheet">
   <style>
       body {
           padding: 0;
@@ -12,10 +12,10 @@
       }
   </style>
 
-  <script type="module" th:src="@{/poc-thymeleaf-pattern-library-components.js}"></script>
+  <script type="module" th:src="@{/pl/poc-thymeleaf-pattern-library-components.js}"></script>
   <script type="module">
     import { Application } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js";
-    import { AlertController, greet } from "[[@{/poc-thymeleaf-pattern-library-components.js}]]";
+    import { AlertController, greet } from "[[@{/pl/poc-thymeleaf-pattern-library-components.js}]]";
 
     window.greet = greet;
 
@@ -24,6 +24,6 @@
   </script>
 </head>
 <body>
-<th:block th:replace="${'/components' + templatePath} :: template"></th:block>
+<th:block th:replace="~{${'components' + templatePath} :: template}"></th:block>
 </body>
 </html>

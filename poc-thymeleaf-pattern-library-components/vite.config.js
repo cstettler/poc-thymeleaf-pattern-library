@@ -1,26 +1,33 @@
 import { defineConfig } from 'vite'
 import copy from 'rollup-plugin-copy'
 
+const componentResourceRootPath = 'src/main/resources/templates/pl';
+const componentBaseName = 'poc-thymeleaf-pattern-library-components';
+const targetPath = 'target/classes/static/pl';
+
 export default defineConfig({
   build: {
-    outDir: 'target/classes/static',
+    outDir: targetPath,
     emptyOutDir: false,
     lib: {
-      entry: ['src/main/resources/templates/components/index.js', 'src/main/resources/templates/components/index.css'],
+      entry: [
+        path(componentResourceRootPath, '/index.js'),
+        path(componentResourceRootPath, '/index.css')
+      ],
       formats: ['es'],
-      fileName: 'poc-thymeleaf-pattern-library-components'
+      fileName: componentBaseName
     },
     rollupOptions: {
       output: {
-        assetFileNames: "poc-thymeleaf-pattern-library-components.[ext]"
+        assetFileNames: `${componentBaseName}.[ext]`
       },
       plugins: [
         copy({
           targets: [
             {
-              src: 'src/main/resources/templates/components/**/*.png',
-              dest: 'target/classes/static',
-              rename: (name, extension, fullPath) => `${pathAfter(fullPath, 'src/main/resources/templates')}`
+              src: path(componentResourceRootPath, '/**/*.png'),
+              dest: targetPath,
+              rename: (name, extension, fullPath) => `${pathAfter(fullPath, componentResourceRootPath)}`
             }
           ],
         })
@@ -29,8 +36,10 @@ export default defineConfig({
   }
 })
 
+function path(rootPath, filePath) {
+  return rootPath + filePath;
+}
+
 function pathAfter(fullPath, relativePathRoot) {
-  console.log(fullPath)
-  console.log(relativePathRoot)
   return fullPath.substring(fullPath.indexOf(relativePathRoot) + relativePathRoot.length)
 }

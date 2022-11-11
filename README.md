@@ -54,3 +54,6 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 - demonstrate unit testing of UI components
 - demonstrate integration testing of UI components via pattern library application (e.g. using Playwright)
 - use more specific root folder for UI components (to avoid collisions on class path)
+
+# Learnings
+- templates need to be referred to without leading slash, otherwise template cannot be found when running application from jar (probably due to different classloader hierarchy in fat jar)

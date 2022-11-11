@@ -84,7 +84,7 @@ public class ComponentGroup {
     return resources.stream()
       .filter(ComponentGroup::isExample)
       .filter(example -> !isMainExample(example))
-      .map(example -> new ShowCase(id + "/" + baseName(example), example, lookupDocumentationFor(example)))
+      .map(example -> new ShowCase(id + baseName(example), example, lookupDocumentationFor(example)))
       .collect(toList());
   }
 
