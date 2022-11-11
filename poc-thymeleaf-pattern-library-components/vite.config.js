@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import postcssNesting from 'postcss-nesting';
+import copy from 'rollup-plugin-copy'
 
 export default defineConfig({
   build: {
@@ -13,6 +13,23 @@ export default defineConfig({
       output: {
         assetFileNames: "poc-thymeleaf-pattern-library-components.[ext]"
       },
+      plugins: [
+        copy({
+          targets: [
+            {
+              src: 'src/main/resources/templates/components/**/*.png',
+              dest: 'target/classes/static',
+              rename: (name, extension, fullPath) => `${pathAfter(fullPath, 'src/main/resources/templates')}`
+            }
+          ],
+        })
+      ]
     }
   }
 })
+
+function pathAfter(fullPath, relativePathRoot) {
+  console.log(fullPath)
+  console.log(relativePathRoot)
+  return fullPath.substring(fullPath.indexOf(relativePathRoot) + relativePathRoot.length)
+}

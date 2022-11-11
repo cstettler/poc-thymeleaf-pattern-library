@@ -5,6 +5,6 @@ export class AlertController extends Controller {
   static targets = [ "alert"]
 
   close() {
-    this.alertTarget.hidden = true;
+    this.alertTarget.style.display = 'none';
   }
 }

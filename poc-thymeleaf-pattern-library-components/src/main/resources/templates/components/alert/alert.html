@@ -2,9 +2,10 @@
     xmlns:th="http://www.thymeleaf.org"
     th:fragment="alert (message)">
 
-  <div class="pl-alert" data-controller="alert" data-alert-target="alert">
+  <div class="pl-alert" data-controller="alert" data-alert-target="alert" hidden>
+    <img class="pl-alert-icon" th:src="@{/components/alert/alert-icon.png}"/>
     <p class="pl-alert-message" th:text="${message}"></p>
-    <button class="pl-alert-close-button" data-action="click->alert#close">X</button>
+    <button class="pl-alert-close-button" data-action="click->alert#close">x</button>
   </div>
 
 </th:block>

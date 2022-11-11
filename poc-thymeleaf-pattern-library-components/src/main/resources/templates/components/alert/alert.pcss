@@ -1,12 +1,25 @@
 .pl-alert {
     background: lightgreen;
     border: green solid 1px;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+
+    & .pl-alert-icon {
+        height: 1rem;
+        margin-right: 1rem;
+    }
 
     & .pl-alert-message {
         font-style: italic;
+        flex:  1;
     }
 
     & .pl-alert-close-button {
-
+        flex:  0;
+        padding: 0.25rem;
+        border: none;
+        background: transparent;
+        align-self: flex-start;
     }
 }
