@@ -62,6 +62,9 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 - demonstrate unit testing of UI components
 - demonstrate integration testing of UI components via pattern library application (e.g. using Playwright)
 - use more specific root folder for UI components (to avoid collisions on class path)
+- support / demonstrate bundling and tree-shaking in consuming application
+- add versioning to component library 
+- add version-based scoping for css selectors
 
 
 # Learnings
