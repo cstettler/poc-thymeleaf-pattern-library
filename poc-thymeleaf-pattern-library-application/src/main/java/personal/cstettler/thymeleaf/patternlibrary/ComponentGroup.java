@@ -187,6 +187,12 @@ public class ComponentGroup {
     return null;
   }
 
+  private static String titleFromFilename(Resource example) {
+    return stream(example.getFilename().substring(0, example.getFilename().lastIndexOf(".")).split("-"))
+      .map(StringUtils::capitalize)
+      .collect(joining(" "));
+  }
+
   private static String stripTitle(String markdownSource) {
     if (markdownSource.startsWith("# ")) {
       return skipLines(markdownSource, 1);
@@ -240,9 +246,7 @@ public class ComponentGroup {
         }
       }
 
-      return stream(example.getFilename().split("-"))
-        .map(StringUtils::capitalize)
-        .collect(joining(" "));
+      return titleFromFilename(example);
     }
 
     public boolean hasExample() {
