@@ -1,6 +1,6 @@
-<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="alert (message)">
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="alert (type, message)">
 
-  <div class="pl-alert" data-controller="alert" data-alert-target="alert" hidden>
+  <div class="pl-alert" th:classappend="'pl-alert-' + ${type}" data-controller="alert" data-alert-target="alert" hidden>
     <img class="pl-alert-icon" th:src="@{/pl/alert/alert-icon.png}"/>
     <p class="pl-alert-message" th:text="${message}"></p>
     <button class="pl-alert-close-button" data-action="click->alert#close">x</button>
