@@ -1,5 +1,5 @@
-<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="button (text)">
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="button (text, greet)">
 
-    <button class="pl-button" th:text="${text}" th:onclick="greet(/*[[${text}]]*/)"></button>
+    <button class="pl-button" th:text="${text}" th:onclick="greet(/*[[${greet}]]*/)"></button>
 
 </th:block>
