@@ -2,6 +2,7 @@ package personal.cstettler.thymeleaf.patternlibrary;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.stream;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -12,6 +13,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.core.io.Resource;
@@ -46,14 +48,14 @@ public class ComponentGroup {
       }
     }
 
-    return isRoot() ? null : capitalized(localId());
+    return isRoot() ? null : capitalized(stripSortingDigits(localId()));
   }
 
   public boolean hasDocumentation() {
     if (isRoot()) {
       return hasResource("index.md");
     }
-    return hasResource(localId() + ".md");
+    return hasResource(localId() + ".md") || hasResource(stripSortingDigits(localId()) + ".md");
   }
 
   public String getDocumentationContent() {
@@ -69,7 +71,9 @@ public class ComponentGroup {
   }
 
   public String getExampleContent() {
-    return extractResource(resourceFor(localId() + ".html"));
+    return extractResource(resourceFor(localId() + ".html")
+      .orElseThrow(() -> new IllegalStateException("no documentation '" + localId() + ".html' found"))
+    );
   }
 
   public boolean hasSubGroups() {
@@ -77,14 +81,16 @@ public class ComponentGroup {
   }
 
   public List<ComponentGroup> getSubGroups() {
-    return subGroups;
+    return subGroups.stream()
+      .sorted(comparing(ComponentGroup::localId))
+      .collect(toList());
   }
 
-  public List<ShowCase> getShowCases() {
+  public List<Showcase> getShowCases() {
     return resources.stream()
       .filter(ComponentGroup::isExample)
       .filter(example -> !isMainExample(example))
-      .map(example -> new ShowCase(id + baseName(example), example, lookupDocumentationFor(example)))
+      .map(example -> new Showcase(id + baseName(example), example, lookupDocumentationFor(example)))
       .collect(toList());
   }
 
@@ -98,15 +104,18 @@ public class ComponentGroup {
 
   private Resource getDocumentation() {
     if (isRoot()) {
-      return resourceFor("index.md");
+      return resourceFor("index.md")
+        .orElseThrow(() -> new IllegalStateException("root folder must contain 'index.md'"));
     }
-    return resourceFor(localId() + ".md");
+    return resourceFor(localId() + ".md")
+      .or(() -> resourceFor(stripSortingDigits(localId()) + ".md"))
+      .orElseThrow(() -> new IllegalStateException("no documentation found in group '" + localId() + "'"));
   }
 
   private Resource lookupDocumentationFor(Resource example) {
     return resources.stream()
       .filter(ComponentGroup::isDocumentation)
-      .filter(documentation -> baseName(documentation).equals(baseName(example)))
+      .filter(documentation -> baseName(documentation).equals(baseName(example)) || baseName(documentation).equals(stripSortingDigits(baseName(example))))
       .filter(documentation -> !isMainDocumentation(documentation))
       .findFirst()
       .orElse(null);
@@ -149,11 +158,10 @@ public class ComponentGroup {
     return resources.stream().anyMatch(resource -> resource.getFilename().equals(filename));
   }
 
-  private Resource resourceFor(String filename) {
+  private Optional<Resource> resourceFor(String filename) {
     return resources.stream()
       .filter(resource -> resource.getFilename().equals(filename))
-      .findFirst()
-      .orElseThrow(() -> new IllegalStateException("no resource found with filename '" + filename + "'"));
+      .findFirst();
   }
 
   private static String render(String markdown) {
@@ -188,9 +196,20 @@ public class ComponentGroup {
   }
 
   private static String titleFromFilename(Resource example) {
-    return stream(example.getFilename().substring(0, example.getFilename().lastIndexOf(".")).split("-"))
-      .map(StringUtils::capitalize)
+    String filename = example.getFilename();
+
+    filename = stripSortingDigits(filename);
+
+    return stream(filename.substring(0, filename.lastIndexOf(".")).split("-"))
+      .map(ComponentGroup::capitalized)
       .collect(joining(" "));
+  }
+
+  private static String stripSortingDigits(String filename) {
+    if (filename.matches("\\d+-.*")) {
+      filename = filename.substring(filename.indexOf("-") + 1);
+    }
+    return filename;
   }
 
   private static String stripTitle(String markdownSource) {
@@ -221,13 +240,13 @@ public class ComponentGroup {
     }
   }
 
-  public static class ShowCase {
+  public static class Showcase {
 
     private final String id;
     private final Resource example;
     private final Resource documentation;
 
-    public ShowCase(String id, Resource example, Resource documentation) {
+    public Showcase(String id, Resource example, Resource documentation) {
       this.id = id;
       this.example = example;
       this.documentation = documentation;

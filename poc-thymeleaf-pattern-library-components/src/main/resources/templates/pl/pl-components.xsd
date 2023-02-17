@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://personal.cstettler.thymeleaf.dialect"
+           elementFormDefault="qualified"
+           attributeFormDefault="qualified">
+
+    <xs:element name="button">
+        <xs:complexType>
+            <xs:attribute name="text" type="xs:string"/>
+            <xs:attribute name="greet" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,9 +1,0 @@
-<th:block xmlns:th="http://www.thymeleaf.org" xmlns:pl="http://personal.cstettler.thymeleaf.dialect">
-  <th:block th:replace="~{pl/button/button :: button ('Click Me !!!', 'Hello')}"/>
-
-  <th:block th:with="text='test'">
-    <pl:button pl:text="${text}" th:src="${text}" greet="'Hi!'">
-      <span>Title</span>
-    </pl:button>
-  </th:block>
-</th:block>

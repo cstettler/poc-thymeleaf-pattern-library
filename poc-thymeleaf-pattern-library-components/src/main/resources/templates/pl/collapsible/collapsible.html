@@ -3,12 +3,22 @@
   <pl-collapsible th:open="${initiallyOpen}">
     <div class="pl-collapsible-title">
       <div>
-        <th:block th:replace="${titleElement}" />
+        <th:block th:if="${titleElement} != null">
+          <th:block th:replace="${titleElement}" />
+        </th:block>
+        <th:block th:if="${titleElement} == null">
+          <pl:slot pl:name="title"/>
+        </th:block>
       </div>
       <span class="pl-collapsible-arrow"></span>
     </div>
     <div class="pl-collapsible-content">
-      <th:block th:replace="${contentElement}" />
+      <th:block th:if="${contentElement} != null">
+        <th:block th:replace="${contentElement}" />
+      </th:block>
+      <th:block th:if="${contentElement} == null">
+        <pl:slot pl:name="content"/>
+      </th:block>
     </div>
   </pl-collapsible>
 

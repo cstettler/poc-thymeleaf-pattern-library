@@ -9,7 +9,7 @@
 <body>
 <th:block layout:fragment="content">
   <!--/*@thymesVar id="componentGroup" type="personal.cstettler.thymeleaf.patternlibrary.ComponentGroup"*/-->
-  <!--/*@thymesVar id="showCase" type="personal.cstettler.thymeleaf.patternlibrary.ComponentGroup$ShowCase"*/-->
+  <!--/*@thymesVar id="showCase" type="personal.cstettler.thymeleaf.patternlibrary.ComponentGroup.Showcase"*/-->
 
   <h1 th:text="${componentGroup.name != null ? componentGroup.name : applicationName}"></h1>
   <th:block th:if="${componentGroup.hasDocumentation()}" th:utext="${componentGroup.documentationContent}"></th:block>

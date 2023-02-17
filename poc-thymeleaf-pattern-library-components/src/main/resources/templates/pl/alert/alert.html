@@ -1,9 +1,14 @@
 <th:block xmlns:th="http://www.thymeleaf.org" th:fragment="alert (type, message)">
-
   <div class="pl-alert" th:classappend="'pl-alert-' + ${type}" data-controller="alert" data-alert-target="alert" hidden>
     <img class="pl-alert-icon" th:src="@{/pl/alert/alert-icon.png}"/>
-    <p class="pl-alert-message" th:text="${message}"></p>
+    <p class="pl-alert-message">
+      <th:block th:if="${message} != null" th:text="${message}"/>
+      <th:block th:if="${message} == null">
+        <pl:slot>
+          This is the fallback message.
+        </pl:slot>
+      </th:block>
+    </p>
     <button class="pl-alert-close-button" data-action="click->alert#close">x</button>
   </div>
-
 </th:block>

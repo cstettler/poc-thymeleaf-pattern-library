@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.ITemplateEngine;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Controller
 public class PatternLibraryController {
@@ -30,12 +34,16 @@ public class PatternLibraryController {
   private final Resource componentResourcesRoot;
   private final ResourcePatternResolver resourcePatternResolver;
 
+  private ITemplateEngine templateEngine;
+
   PatternLibraryController(
     @Value("${pattern-library.application-name}") String applicationName,
-    @Value("${pattern-library.components-resource-path}") String componentsResourcePath
+    @Value("${pattern-library.components-resource-path}") String componentsResourcePath,
+    ITemplateEngine templateEngine
   ) throws Exception {
     this.applicationName = applicationName;
     this.componentsResourcePath = componentsResourcePath;
+    this.templateEngine = templateEngine;
 
     resourcePatternResolver = new PathMatchingResourcePatternResolver(getClass().getClassLoader());
     componentResourcesRoot = resourcePatternResolver.getResource(componentsResourcePath);
