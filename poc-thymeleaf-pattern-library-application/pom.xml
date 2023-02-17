@@ -64,6 +64,13 @@
 			<artifactId>poc-thymeleaf-pattern-library-components</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.microsoft.playwright</groupId>
+			<artifactId>playwright</artifactId>
+			<version>1.26.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
