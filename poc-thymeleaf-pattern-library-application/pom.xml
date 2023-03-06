@@ -64,6 +64,11 @@
 			<artifactId>poc-thymeleaf-pattern-library-components</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>personal.cstettler</groupId>
+			<artifactId>poc-thymeleaf-pattern-library-dialect</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.microsoft.playwright</groupId>

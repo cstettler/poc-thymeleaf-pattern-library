@@ -19,5 +19,6 @@
 	<modules>
 		<module>poc-thymeleaf-pattern-library-application</module>
 		<module>poc-thymeleaf-pattern-library-components</module>
+		<module>poc-thymeleaf-pattern-library-dialect</module>
 	</modules>
 </project>

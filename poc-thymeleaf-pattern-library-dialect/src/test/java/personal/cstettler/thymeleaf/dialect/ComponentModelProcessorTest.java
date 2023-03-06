@@ -7,7 +7,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.thymeleaf.templatemode.TemplateMode.HTML;
-import static personal.cstettler.thymeleaf.dialect.ComponentModelProcessor.subTreeFrom;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -247,7 +246,7 @@ class ComponentModelProcessorTest {
 
     IModel model = modelFor(templateEvents);
 
-    List<ITemplateEvent> subTree = subTreeFrom(model, startTemplateEvent);
+    List<ITemplateEvent> subTree = ComponentModelProcessor.subTreeFrom(model, startTemplateEvent);
 
     assertEquals(templateEvents, subTree);
   }
@@ -265,7 +264,7 @@ class ComponentModelProcessorTest {
 
     IModel model = modelFor(templateEvents);
 
-    List<ITemplateEvent> subTree = subTreeFrom(model, startTemplateEvent);
+    List<ITemplateEvent> subTree = ComponentModelProcessor.subTreeFrom(model, startTemplateEvent);
 
     assertEquals(templateEvents.subList(1, 4), subTree);
   }
@@ -288,7 +287,7 @@ class ComponentModelProcessorTest {
 
     IModel model = modelFor(templateEvents);
 
-    List<ITemplateEvent> subTree = subTreeFrom(model, startTemplateEvent);
+    List<ITemplateEvent> subTree = ComponentModelProcessor.subTreeFrom(model, startTemplateEvent);
 
     assertEquals(templateEvents.subList(1, 8), subTree);
   }
@@ -305,7 +304,7 @@ class ComponentModelProcessorTest {
 
     IModel model = modelFor(templateEvents);
 
-    List<ITemplateEvent> subTree = subTreeFrom(model, startTemplateEvent);
+    List<ITemplateEvent> subTree = ComponentModelProcessor.subTreeFrom(model, startTemplateEvent);
 
     assertEquals(List.of(startTemplateEvent), subTree);
   }
@@ -324,7 +323,7 @@ class ComponentModelProcessorTest {
 
     IModel model = modelFor(templateEvents);
 
-    List<ITemplateEvent> subTree = subTreeFrom(model, startTemplateEvent);
+    List<ITemplateEvent> subTree = ComponentModelProcessor.subTreeFrom(model, startTemplateEvent);
 
     assertEquals(templateEvents.subList(0, 3), subTree);
   }
@@ -334,7 +333,7 @@ class ComponentModelProcessorTest {
     ITemplateEvent startTemplateEvent = openElementTag();
     IModel model = modelFor(emptyList());
 
-    List<ITemplateEvent> subTree = subTreeFrom(model, startTemplateEvent);
+    List<ITemplateEvent> subTree = ComponentModelProcessor.subTreeFrom(model, startTemplateEvent);
 
     assertEquals(emptyList(), subTree);
   }
@@ -400,6 +399,7 @@ class ComponentModelProcessorTest {
     return result.trim();
   }
 
+  @SafeVarargs
   private static <T> Set<T> setOf(T... items) {
     return new LinkedHashSet<>(asList(items));
   }

@@ -1,6 +1,13 @@
 # PoC for Thymeleaf Pattern Library
 
 Demonstrates how UI components can be built based on Thymeleaf fragments and be show-cased in a pattern library application.
+It also provides a custom Thymeleaf dialect that simplifies the use of Thymeleaf fragments in a more component-style.
+
+## Credits
+
+The fundamental idea if the pattern library application is based on https://github.com/joyheron/spring-boot-pattern-library</a>.
+
+The custom Thymeleaf dialect mimics ideas taken from https://github.com/Serbroda/thymeleaf-component-dialect and https://github.com/blynx/thymeleaf-fertilizer-dialect-playground.
 
 ## Goal
 
@@ -9,7 +16,7 @@ Demonstrates how UI components can be built based on Thymeleaf fragments and be 
 - provide smooth developer experience with IDE support and live reload
 - keep technology stack and build pipeline simple
 - support simple integration of UI components into Spring Boot application
-
+- support convenient use of Thymeleaf fragments as components
 
 ## Features
 
@@ -17,6 +24,7 @@ Demonstrates how UI components can be built based on Thymeleaf fragments and be 
 - use Post-CSS in UI components
 - use JavaScript in UI components
 - use images in UI components (currently only png)
+- use Thymeleaf fragments as components with help of the custom dialect
 - live reload when editing UI components or pattern library application
 
 
@@ -33,6 +41,8 @@ Demonstrates how UI components can be built based on Thymeleaf fragments and be 
 - the pattern library application is a normal Spring Boot application in a separate Maven module
 - the pattern library application defines a Maven dependency to the UI components jar file
 - the UI components are being developed while being show-cased in the pattern library application
+- the custom Thymeleaf dialect is developed in a separate Maven module, provided as a separate jar file
+- the pattern library application defines a Maven dependency to the custom Thymeleaf dialect jar file
 
 
 ## Developer Workflow
@@ -51,30 +61,29 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 
 - execute `./mvnw clean install`
 - start pattern library application via `java -jar poc-thymeleaf-pattern-library-application/target/poc-thymeleaf-pattern-library-application-0.0.1-SNAPSHOT.jar`
-- use resulting jar file `poc-thymeleaf-pattern-library-components/target/poc-thymeleaf-pattern-library-components-0.0.1-SNAPSHOT.jar` as dependency in application
+- use resulting jar file `poc-thymeleaf-pattern-library-components/target/poc-thymeleaf-pattern-library-components-0.0.1-SNAPSHOT.jar` (contains all UI components) as dependency in application
+- use resulting jar file `poc-thymeleaf-pattern-library-dialect/target/poc-thymeleaf-pattern-library-dialect-0.0.1-SNAPSHOT.jar` (contains the custom Thymeleaf dialect) as dependency in application
 
 
-## Improvements
+## Improvement Ideas
 
-- support component dialect when using UI components (e.g. https://github.com/Serbroda/thymeleaf-component-dialect or https://github.com/blynx/thymeleaf-fertilizer-dialect-playground)
+### Application
 - use fingerprinting and caching provided by Spring Boot
 - support component documentation as part of UI component module (<component>.md)
-- demonstrate unit testing of UI components
 - demonstrate integration testing of UI components via pattern library application (e.g. using Playwright)
-- use more specific root folder for UI components (to avoid collisions on class path)
 - support / demonstrate bundling and tree-shaking in consuming application
-- add versioning to component library 
+
+### Components
+- demonstrate unit testing of UI components
+- add versioning to component library
 - add version-based scoping for css selectors
 
-
-## Learnings
-
-- templates need to be referred to without leading slash, otherwise template cannot be found when running application from jar (probably due to different classloader hierarchy in fat jar)
-
-
-## To-Dos
-
+### Dialect
 - support arbitrary attributes on dialect components (pass onto "root" element, or first, if no root defined)
 - introduce list component with complex model object
-- strategy for registering components (with static and classpath-based implementation)
-- separate maven module for component dialect
+- support strategy for registering components (with static and classpath-based implementation)
+
+
+## Important Learnings
+
+- templates need to be referred to without leading slash, otherwise template cannot be found when running application from jar (probably due to different classloader hierarchy in fat jar)
