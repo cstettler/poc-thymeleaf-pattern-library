@@ -51,7 +51,7 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 
 - execute `./mvnw clean install`
 - start pattern library application via `java -jar poc-thymeleaf-pattern-library-application/target/poc-thymeleaf-pattern-library-application-0.0.1-SNAPSHOT.jar`
-- use resulting jar file in application
+- use resulting jar file `poc-thymeleaf-pattern-library-components/target/poc-thymeleaf-pattern-library-components-0.0.1-SNAPSHOT.jar` as dependency in application
 
 
 ## Improvements
@@ -67,12 +67,13 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 - add version-based scoping for css selectors
 
 
-# Learnings
+## Learnings
 
 - templates need to be referred to without leading slash, otherwise template cannot be found when running application from jar (probably due to different classloader hierarchy in fat jar)
 
 
-# To-Dos
+## To-Dos
+
 - support arbitrary attributes on dialect components (pass onto "root" element, or first, if no root defined)
 - introduce list component with complex model object
 - strategy for registering components (with static and classpath-based implementation)
