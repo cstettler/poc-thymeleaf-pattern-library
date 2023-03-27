@@ -77,6 +77,7 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 - demonstrate unit testing of UI components
 - add versioning to component library
 - add version-based scoping for css selectors
+- page objects for Playwright as part of component test root
 
 ### Dialect
 - support arbitrary attributes on dialect components (pass onto "root" element, or first, if no root defined)
