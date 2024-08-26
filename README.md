@@ -83,3 +83,4 @@ Hint: remap `CMD + S` to `Make Project` to consistently use same command for tri
 - support arbitrary attributes on dialect components (pass onto "root" element, or first, if no root defined)
 - introduce list component with complex model object
 - support strategy for registering components (with static and classpath-based implementation)
+- support for kebap-case attributes in dialect (converted to camel-case)
